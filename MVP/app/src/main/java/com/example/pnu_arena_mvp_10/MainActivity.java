@@ -25,11 +25,12 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+    private frag_map frag_map;
     private frag_home frag_home;
     private frag_search frag_search;
     private frag_attention frag_attention;
     private frag_mypage frag_mypage;
-    private frag_camera frag_camera;
+    //private frag_camera frag_camera;
 
 
     @Override
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.action_map:
+                        setFrag(5);
+                        break;
                     case R.id.action_home:
                         setFrag(0);
                         break;
@@ -54,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_my:
                         setFrag(3);
                         break;
-                    case R.id.action_camera:
+                    /*case R.id.action_camera:
                         setFrag(4);
-                        break;
+                        break;*/
                 }
 
                 return true;
@@ -66,8 +70,9 @@ public class MainActivity extends AppCompatActivity {
         frag_search = new frag_search();
         frag_attention = new frag_attention();
         frag_mypage = new frag_mypage();
-        frag_camera = new frag_camera();
-        setFrag(0); // The first Fragment
+        //frag_camera = new frag_camera();
+        frag_map = new frag_map();
+        setFrag(5); // The first Fragment
 
     }
 
@@ -92,10 +97,13 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.main_frame, frag_mypage);
                 fragmentTransaction.commit();
                 break;
-            case 4:
+            /*case 4:
                 fragmentTransaction.replace(R.id.main_frame, frag_camera);
                 fragmentTransaction.commit();
-                break;
+                break;*/
+            case 5:
+                fragmentTransaction.replace(R.id.main_frame, frag_map);
+                fragmentTransaction.commit();
         }
     }
 

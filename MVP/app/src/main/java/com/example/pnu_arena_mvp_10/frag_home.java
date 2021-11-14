@@ -1,12 +1,17 @@
 package com.example.pnu_arena_mvp_10;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,127 +20,134 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 
 public class frag_home extends Fragment {
+    private ArrayList<SearchItemData> itemData = new ArrayList<>();
+    private ListView listView;
+    private SearchAdapter adapter;
 
-    ArrayList<HomeItem> actors;
-    ListView customListView;
-    private static HomeAdapter homeAdapter;
-
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.frag_home, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.frag_home, container, false);
 
-        //data를 가져와서 어답터와 연결해 준다. 서버에서 가져오는게 대부분 이다.
-        actors = new ArrayList<HomeItem>();
-        actors.add(new HomeItem(R.mipmap.ic_launcher, R.drawable.ic_baseline_star_24,
-                R.drawable.ic_baseline_star_border_24, R.drawable.ic_baseline_warning_24,
-                "부산광역시 장전동", "부산대학교 학생식당",
-                "종합 식당", "4.5"));
-        actors.add(new HomeItem(R.mipmap.ic_launcher, R.drawable.ic_baseline_star_24,
-                R.drawable.ic_baseline_star_border_24, R.drawable.ic_baseline_warning_24,
-                "부산광역시 장전동", "부산대학교 학생식당",
-                "종합 식당", "4.5"));
-        actors.add(new HomeItem(R.mipmap.ic_launcher, R.drawable.ic_baseline_star_24,
-                R.drawable.ic_baseline_star_border_24, R.drawable.ic_baseline_warning_24,
-                "부산광역시 장전동", "부산대학교 학생식당",
-                "종합 식당", "4.5"));
-        actors.add(new HomeItem(R.mipmap.ic_launcher, R.drawable.ic_baseline_star_24,
-                R.drawable.ic_baseline_star_border_24, R.drawable.ic_baseline_warning_24,
-                "부산광역시 장전동", "부산대학교 학생식당",
-                "종합 식당", "4.5"));
-        actors.add(new HomeItem(R.mipmap.ic_launcher, R.drawable.ic_baseline_star_24,
-                R.drawable.ic_baseline_star_border_24, R.drawable.ic_baseline_warning_24,
-                "부산광역시 장전동", "부산대학교 학생식당",
-                "종합 식당", "4.5"));
-        actors.add(new HomeItem(R.mipmap.ic_launcher, R.drawable.ic_baseline_star_24,
-                R.drawable.ic_baseline_star_border_24, R.drawable.ic_baseline_warning_24,
-                "부산광역시 장전동", "부산대학교 학생식당",
-                "종합 식당", "4.5"));
-        actors.add(new HomeItem(R.mipmap.ic_launcher, R.drawable.ic_baseline_star_24,
-                R.drawable.ic_baseline_star_border_24, R.drawable.ic_baseline_warning_24,
-                "부산광역시 장전동", "부산대학교 학생식당",
-                "종합 식당", "4.5"));
-        actors.add(new HomeItem(R.mipmap.ic_launcher, R.drawable.ic_baseline_star_24,
-                R.drawable.ic_baseline_star_border_24, R.drawable.ic_baseline_warning_24,
-                "부산광역시 장전동", "부산대학교 학생식당",
-                "종합 식당", "4.5"));
-        actors.add(new HomeItem(R.mipmap.ic_launcher, R.drawable.ic_baseline_star_24,
-                R.drawable.ic_baseline_star_border_24, R.drawable.ic_baseline_warning_24,
-                "부산광역시 장전동", "부산대학교 학생식당",
-                "종합 식당", "4.5"));
+        listView = (ListView)view.findViewById(R.id.listview);
 
-        customListView = (ListView) rootView.findViewById(R.id.listview);
-        homeAdapter = new HomeAdapter(getContext(),actors);
-        customListView.setAdapter(homeAdapter);
+        adapter = new SearchAdapter();
 
-        //리스트 항목 클릭하면 다른 액티비티로 전환됨
-        //final String[] listMenu = getResources().getStringArray(R.array.stores_array);
-        //final String[] listContent = getResources().getStringArray(R.array.contents_array);
+        //TypedArray resthumbs = getResources().obtainTypedArray(R.array.resthumb);
 
-        customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //리스트 내용
+        adapter.add_item(R.drawable.pizza, R.drawable.ic_baseline_warning_24_red,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_border_24,
+                "부산광역시 금정구 장전동","피자 전문점",
+                "피자","4.5");
+
+        adapter.add_item(R.drawable.bibimbab, R.drawable.ic_baseline_warning_24,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_border_24,
+                "부산광역시 금정구 부곡동","비빔밥 전문점",
+                "비빔밥","5.0");
+
+        adapter.add_item(R.drawable.chicken, R.drawable.ic_baseline_warning_24_green,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_border_24,
+                "부산광역시 사상구 괘법동","치킨 전문점",
+                "치킨","3.8");
+
+        adapter.add_item(R.drawable.curry, R.drawable.ic_baseline_warning_24_red,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_border_24,
+                "부산광역시 기장군 기장읍","카레 전문점",
+                "카레","3.6");
+
+        adapter.add_item(R.drawable.donut, R.drawable.ic_baseline_warning_24,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_border_24,
+                "부산광역시 사하구 괴정동","도넛 전문점",
+                "도넛","4.3");
+
+        adapter.add_item(R.drawable.hamburger, R.drawable.ic_baseline_warning_24_red,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_24,
+                "부산광역시 사하구 당리동","햄버거 전문점",
+                "햄버거","4.7");
+
+        adapter.add_item(R.drawable.hotdog, R.drawable.ic_baseline_warning_24,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_border_24,
+                "부산광역시 강서구 죽동","핫도그 전문점",
+                "핫도그","3.9");
+
+        adapter.add_item(R.drawable.junkfood, R.drawable.ic_baseline_warning_24_green,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_border_24,
+                "부산광역시 해운대구 반여동","패스트푸드 전문점",
+                "패스트푸드","3.7");
+
+        adapter.add_item(R.drawable.noodle, R.drawable.ic_baseline_warning_24_green,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_border_24,
+                "부산광역시 북구 덕천동","국수 전문점",
+                "국수","4.1");
+
+        adapter.add_item(R.drawable.avocado, R.drawable.ic_baseline_warning_24,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_24,
+                "부산광역시 해운대구 우동","샌드위치 전문점",
+                "샌드위치","4.5");
+
+        adapter.add_item(R.drawable.pizza, R.drawable.ic_baseline_warning_24_red,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_border_24,
+                "부산광역시 기장군 일광면","피자 전문점",
+                "피자","4.3");
+
+        adapter.add_item(R.drawable.bibimbab, R.drawable.ic_baseline_warning_24,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_24,
+                "부산광역시 기장군 철마면","비빔밥 전문점",
+                "비빔밥","5.0");
+
+        adapter.add_item(R.drawable.chicken, R.drawable.ic_baseline_warning_24_green,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_border_24,
+                "부산광역시 기장군 장안읍","치킨 전문점",
+                "치킨","3.5");
+
+        adapter.add_item(R.drawable.curry, R.drawable.ic_baseline_warning_24,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_border_24,
+                "부산광역시 수영구 망미동","카레 전문점",
+                "카레","4.1");
+
+        adapter.add_item(R.drawable.donut, R.drawable.ic_baseline_warning_24,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_24,
+                "부산광역시 북구 만덕동","도넛 전문점",
+                "도넛","4.9");
+
+        adapter.add_item(R.drawable.hamburger, R.drawable.ic_baseline_warning_24_red,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_border_24,
+                "부산광역시 강서구 강동동","햄버거 전문점",
+                "햄버거","4.8");
+
+        adapter.add_item(R.drawable.hotdog, R.drawable.ic_baseline_warning_24,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_border_24,
+                "부산광역시 수영구 수영동","핫도그 전문점",
+                "핫도그","3.5");
+
+        adapter.add_item(R.drawable.junkfood, R.drawable.ic_baseline_warning_24_red,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_border_24,
+                "부산광역시 기장군 정관읍","패스트푸드 전문점",
+                "패스트푸드","3.7");
+
+        adapter.add_item(R.drawable.noodle, R.drawable.ic_baseline_warning_24,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_24,
+                "부산광역시 부산진구 가야동","국수 전문점",
+                "국수","4.8");
+
+        adapter.add_item(R.drawable.avocado, R.drawable.ic_baseline_warning_24_green,
+                R.drawable.ic_baseline_star_24, R.drawable.ic_baseline_star_24,
+                "부산광역시 영도구 동삼동","샌드위치 전문점",
+                "샌드위치","4.9");
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), StoreActivity.class); //fragment에서 Activity 불러올 땐 이렇게.
-                //intent.putExtra("inside", listContent[position]);
+                Intent intent = new Intent(getActivity(), StoreActivity.class);
                 startActivity(intent);
             }
         });
 
-        return rootView;
+        listView.setAdapter(adapter);
+
+        return view;
+
     }
 }
-
-class HomeItem {
-    private int main_img;
-    private int star_img;
-    private int mystore_img;
-    private int warning_img;
-    private String locationofstore;
-    private String nameofstore;
-    private String kindofstore;
-    private String star_point;
-
-    public HomeItem(int main_img, int star_img, int mystore_img, int warning_img, String locationofstore, String nameofstore, String kindofstore, String star_point) {
-        this.main_img = main_img;
-        this.star_img = star_img;
-        this.mystore_img = mystore_img;
-        this.warning_img = warning_img;
-        this.locationofstore = locationofstore;
-        this.nameofstore = nameofstore;
-        this.kindofstore = kindofstore;
-        this.star_point = star_point;
-    }
-
-    public int getMain_img() {
-        return main_img;
-    }
-
-    public int getStar_img() {
-        return star_img;
-    }
-
-    public int getMystore_img() {
-        return mystore_img;
-    }
-
-    public int getWarning_img() {
-        return warning_img;
-    }
-
-    public String getLocationofstore() {
-        return locationofstore;
-    }
-
-    public String getNameofstore() {
-        return nameofstore;
-    }
-
-    public String getKindofstore() {
-        return kindofstore;
-    }
-
-    public String getStar_point() {
-        return star_point;
-    }
-}
-

@@ -23,6 +23,10 @@
         <activity android:name=".Notice"/>
         <activity android:name=".CustomerCenter"/>
         <activity android:name=".Settings"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBM5bbW9wil5DTCstlRwNdkzM8Vx5k-BSo"/>
     </application>
 
 </manifest>

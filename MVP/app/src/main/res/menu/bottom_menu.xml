@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/action_map"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_map_24"
+        android:title="map"/>
+
+    <item
         android:id="@+id/action_home"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_home_24"
@@ -24,9 +30,9 @@
         android:icon="@drawable/ic_baseline_person_24"
         android:title="my page"/>
 
-    <item
+    <!--<item
         android:id="@+id/action_camera"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_camera_alt_24"
-        android:title="camera"/>
+        android:title="camera"/>-->
 </menu>
